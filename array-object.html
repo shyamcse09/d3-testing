@@ -1,0 +1,52 @@
+// JS Array <-> Object Cheatsheet
+<script>
+// 1. Array of Objects -> Object (keyed by a property)
+const data1 = [
+  { id: 1, name: "Alice" },
+  { id: 2, name: "Bob" }
+];
+const keyedById = data1.reduce((acc, item) => {
+  acc[item.id] = item;
+  return acc;
+}, {});
+
+// 2. Array of Objects -> Object (key: value mapping)
+const data2 = [
+  { name: "Electronics", value: 2700 },
+  { name: "Fashion", value: 180 }
+];
+const nameValueMap = data2.reduce((acc, { name, value }) => {
+  acc[name] = value;
+  return acc;
+}, {});
+
+// 3. Object -> Array of Key-Value Pairs
+const obj3 = { a: 1, b: 2 };
+const entries = Object.entries(obj3);
+
+// 4. Object -> Array of Objects
+const arrayOfObjects = Object.entries(obj3).map(([key, value]) => ({ key, value }));
+
+// 5. Array of Key-Value Pairs -> Object
+const kvArray = [['a', 1], ['b', 2]];
+const fromEntries = Object.fromEntries(kvArray);
+
+// 6. Array -> Object (Index as Key)
+const fruits = ['apple', 'banana'];
+const indexedFruits = { ...fruits };
+
+// 7. Object -> Array of Values
+const valuesOnly = Object.values(obj3);
+
+// 8. Object -> Array of Keys
+const keysOnly = Object.keys(obj3);
+
+// 9. Array of Objects -> Flattened Object
+const flattenArray = [ { a: 1 }, { b: 2 }, { c: 3 } ];
+const mergedObject = Object.assign({}, ...flattenArray);
+
+// 10. Deep Clone Object or Array
+const deepCopy = JSON.parse(JSON.stringify(data1));
+
+console.log({ keyedById, nameValueMap, entries, arrayOfObjects, fromEntries, indexedFruits, valuesOnly, keysOnly, mergedObject, deepCopy });
+</script>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>D3 Bar Chart</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+    svg {
+      border: 1px solid #ccc;
+    }
+    .axis text {
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+<svg width="600" height="400"></svg>
+<div id="tooltip" style="position: absolute; padding: 6px 10px; background: #333; color: white; font-size: 12px; border-radius: 4px; pointer-events: none; display: none;"></div>
+
+<script>
+  const data = [30, 86, 168, 281, 303, 365];
+
+  const svg = d3.select("svg");
+  const tooltip = d3.select("#tooltip");
+  const width = +svg.attr("width");
+  const height = +svg.attr("height");
+  const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+
+  const innerWidth = width - margin.left - margin.right;
+  const innerHeight = height - margin.top - margin.bottom;
+
+  const g = svg.append("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+  const xScale = d3.scaleBand()
+    .domain(data.map((_, i) => i))
+    .range([0, innerWidth])
+    .padding(0.1);
+
+  const yScale = d3.scaleLinear()
+    .domain([0, d3.max(data)])
+    .range([innerHeight, 0]);
+
+  // Add X Axis
+  const xAxis = d3.axisBottom(xScale).tickFormat(i => `Item ${i + 1}`);
+  g.append("g")
+    .attr("transform", `translate(0,${innerHeight})`)
+    .call(xAxis);
+
+  // Add Y Axis
+  const yAxis = d3.axisLeft(yScale);
+  g.append("g")
+    .call(yAxis);
+
+  // Draw Bars
+  g.selectAll("rect")
+    .data(data)
+    .enter()
+    .append("rect")
+    .attr("x", (_, i) => xScale(i))
+    .attr("y", d => yScale(d))
+    .attr("width", xScale.bandwidth())
+    .attr("height", d => innerHeight - yScale(d))
+    .attr("fill", "steelblue")
+    .on("mouseover", (event, d) => {
+      tooltip.style("display", "block")
+      .text(`Value: ${d}`);
+    })
+    .on("mousemove", (event) => {
+      tooltip.style("left", (event.pageX + 10) + "px")
+      .style("top", (event.pageY - 20) + "px");
+    })
+    .on("mouseout", () => {
+      tooltip.style("display", "none");
+    });
+</script>
+
+</body>
+</html>

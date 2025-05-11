@@ -1,0 +1,34 @@
+
+SNA 
+TA
+Phase
+Status
+SSC
+
+
+For a particular supplier we will need 
+
+All TA vs Studies in the below format
+
+{
+  "TA": Value
+}
+
+
+SUp Nae TA/Study Breakdown
+{
+  "IMM":   20,
+  "CVM": 10,
+  "ONC": 30,
+}
+
+SUp Nae SSC Breakdown 
+{
+  "SSC1": 20,
+  "SSC2": 10,
+  "SSC3": 30,
+}
+
+S Na TA Stud SSC Phase Status
+ABC   IM 20  
+ABC   ON 20
